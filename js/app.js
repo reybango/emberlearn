@@ -10,11 +10,14 @@ App.IndexRoute = Ember.Route.extend({
 
 // Create the controller so you can trap the input action and act on it
 App.IndexController = Ember.ObjectController.extend( {
+	subredditHeader: "aww",
 	loadList: function() {
 		// Grab the value from the input field
-		var value = this.get('subreddit'), that = "";
+		var value = this.get('subreddit'), that = {};
 
 		if (value) {
+
+			this.set('subredditHeader', value);			
 
 			that = this;
 
@@ -24,6 +27,7 @@ App.IndexController = Ember.ObjectController.extend( {
 
 			// Clear out the input field
 			this.set('subreddit', '');
+
 		}
 	}
 })
