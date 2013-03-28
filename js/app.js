@@ -17,12 +17,8 @@ App.IndexController = Ember.ObjectController.extend( {
 
 		if (value) {
 
-			that = this;
-
-			App.RedditLink.findAll( value ).then( function(response) {
-				that.set('subredditHeader', value);			
-				that.set( 'model',  response );
-			} );
+			this.set('subredditHeader', value);			
+			this.set( 'model',  App.RedditLink.findAll( value ) );
 
 			// Clear out the input field
 			this.set('subreddit', '');
@@ -51,14 +47,20 @@ App.RedditLink.reopenClass({
 	/* Use the Reddit JSON API to retrieve a list of links within a subreddit. Returns
 	 a promise that will resolve to an array of `App.RedditLink` objects */
 	findAll: function(subreddit) {
-		return $.getJSON("http://www.reddit.com/r/" + subreddit + "/.json?jsonp=?").then(function(response) {
-		  		var links = [];
-	  			response.data.children.forEach(function (child) {
-	    			links.push(App.RedditLink.create(child.data));
+
+		var links = Ember.A();
+		
+		$.getJSON("http://www.reddit.com/r/" + subreddit + "/.json?jsonp=?").then(function(response) {
+
+  			response.data.children.forEach(function (child) {
+
+	    			links.pushObject(App.RedditLink.create(child.data));
+
 	  		});
 		
-	  		return links;
 		});
+
+	  	return links;		
 	}
 
 });
