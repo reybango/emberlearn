@@ -17,11 +17,10 @@ App.IndexController = Ember.ObjectController.extend( {
 
 		if (value) {
 
-			this.set('subredditHeader', value);			
-
 			that = this;
 
 			App.RedditLink.findAll( value ).then( function(response) {
+				that.set('subredditHeader', value);			
 				that.set( 'model',  response );
 			} );
 
