@@ -8,11 +8,17 @@ App.IndexRoute = Ember.Route.extend({
 	}
 });
 
+// Create the controller so you can trap the input action and act on it
 App.IndexController = Ember.ObjectController.extend( {
 	loadList: function() {
+		// Grab the value from the input field
 		var value = this.get('subreddit');
+
 		if (value) {
-			App.RedditLink.findAll( value )
+			// Pass the value to the model so it returns the new subreddit content
+			this.set( 'model',  App.RedditLink.findAll( value ) );
+
+			// Clear out the input field
 			this.set('subreddit', '');
 		}
 	}
