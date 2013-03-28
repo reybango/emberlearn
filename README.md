@@ -1,2 +1,1 @@
-emberlearn
-==========
+Learning Ember.js
