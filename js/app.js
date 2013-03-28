@@ -12,11 +12,15 @@ App.IndexRoute = Ember.Route.extend({
 App.IndexController = Ember.ObjectController.extend( {
 	loadList: function() {
 		// Grab the value from the input field
-		var value = this.get('subreddit');
+		var value = this.get('subreddit'), that = "";
 
 		if (value) {
-			// Pass the value to the model so it returns the new subreddit content
-			this.set( 'model',  App.RedditLink.findAll( value ) );
+
+			that = this;
+
+			App.RedditLink.findAll( value ).then( function(response) {
+				that.set( 'model',  response );
+			} );
 
 			// Clear out the input field
 			this.set('subreddit', '');
